@@ -13,7 +13,8 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    //private UnitOfMeasure uom;
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure uom;
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
