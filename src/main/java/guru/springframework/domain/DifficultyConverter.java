@@ -12,18 +12,18 @@ public class DifficultyConverter implements AttributeConverter<Difficulty, Strin
         if(difficulty == null) {
             return null;
         }
-        return difficulty.name();
+        return difficulty.getCode();
 
     }
 
     @Override
-    public Difficulty convertToEntityAttribute(String difficultyLevel) {
-        if(difficultyLevel == null) {
+    public Difficulty convertToEntityAttribute(String code) {
+        if(code == null) {
             return null;
         }
 
         return Stream.of(Difficulty.values())
-                .filter(c -> c.name().equals(difficultyLevel))
+                .filter(c -> c.getCode().equals(code))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
