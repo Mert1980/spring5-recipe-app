@@ -1,5 +1,7 @@
 package guru.springframework.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,12 +17,12 @@ public class Note {
     @Lob // Specifies that a persistent property or field should be persisted as a large object to a database-supported large object type
     private String recipeNotes;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Recipe getRecipe() {
