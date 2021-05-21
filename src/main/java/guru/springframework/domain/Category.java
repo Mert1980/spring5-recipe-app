@@ -8,7 +8,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode
 public class Category {
 
     @Id
