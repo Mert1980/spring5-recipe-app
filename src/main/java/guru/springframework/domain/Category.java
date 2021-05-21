@@ -1,12 +1,14 @@
 package guru.springframework.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
+@EqualsAndHashCode
 public class Category {
 
     @Id
@@ -14,7 +16,7 @@ public class Category {
     private Long id;
     private String description;
 
-    @ManyToMany( fetch = FetchType.EAGER,mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
 
 }
