@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 @Slf4j
 @Service
@@ -29,7 +30,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long id){
-        return recipeRepository.findById(id).orElse(null);
+    public Recipe findById(Long id) {
+        return recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Recipe not found"));
     }
+
+
+
+
 }
