@@ -8,12 +8,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 /*
-We don't mock the object under test. We mock it's dependencies.  Now the service implementation is the object
+We don't mock the object under test. We mock its dependencies.  Now the service implementation is the object
 under test and it is dependent on repository. Therefore we mocked the repository.
 
 Going ahead when we have a controller that calls the service, and we want to test the controller,
@@ -49,4 +50,22 @@ public class RecipeServiceImplTest {
         // verify that the findAll() method of the mock recipeRepository is called exactly once
         verify(recipeRepository, times(1)).findAll();
     }
+
+    @Test
+    public void findById(){
+        Long id = 1L;
+        Recipe recipe = new Recipe();
+        recipe.setId(id);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+
+        Recipe returnedRecipe = recipeService.findById(id);
+
+        assertNotNull("Null recipe returned", returnedRecipe);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+        assertEquals(id, returnedRecipe.getId());
+
+    }
+
 }
