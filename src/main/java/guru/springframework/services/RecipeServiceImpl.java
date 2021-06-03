@@ -40,6 +40,10 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Recipe not found"));
     }
 
+
+    // NOTES
+    // In the save, we don't want "the save" to happen if the conversion of the saved entity to Command fails.
+    // Therefore, @Transactional is used in the save operation.
     @Override
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
