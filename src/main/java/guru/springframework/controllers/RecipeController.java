@@ -1,9 +1,12 @@
 package guru.springframework.controllers;
 
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -20,4 +23,33 @@ public class RecipeController {
         model.addAttribute("recipe", recipeService.findById(id));
         return "recipe/show";
     }
+
+    @RequestMapping("recipe/new")
+    public String newRecipe(Model model){
+        model.addAttribute("recipe", new RecipeCommand());
+        return "recipe/recipeform";
+    }
+
+
+    /**
+     * @ModelAttribute binds the form post parameters to the RecipeCommand object
+     * The method annotated with @PostMapping("recipe") will get called when the recipeform is submitted.
+     *     recipeForm contains this code.
+     *     <form  th:object="${recipe}" th:action="@{/recipe/}" method="post">
+     *
+     *  As seen, th:action="@{/recipe/}" is specified, and also importantly, method="post" is specified.
+     *  So when a user submits the form on the browser, the browser will send out a POST request like this.
+     *
+     *      POST http://localhost:8080/recipe
+     *
+     *  This request will get mapped to the method marked with @PostMapping("recipe")
+     */
+
+    @PostMapping("recipe")
+    public String saveOrUpdate(@ModelAttribute RecipeCommand command){
+        RecipeCommand savedCommand = recipeService.saveRecipeCommand((command));
+
+        return "redirect:/recipe/show/" + savedCommand.getId();
+    }
+
 }
