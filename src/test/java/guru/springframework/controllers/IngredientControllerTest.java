@@ -19,9 +19,8 @@ import java.util.HashSet;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -134,6 +133,23 @@ public class IngredientControllerTest {
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
+    }
 
+    @Test
+    public void deleteRecipeIngredientTest() throws Exception{
+        //given
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(3L);
+        ingredientCommand.setRecipeId(2L);
+
+        //when
+        when(ingredientService.deleteById(anyLong(), anyLong())).thenReturn(ingredientCommand);
+
+        mockMvc.perform(delete("/recipe/3/ingredient/2/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/3/ingredients"));
+
+        //then
+        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
     }
 }

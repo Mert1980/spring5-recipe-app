@@ -72,4 +72,9 @@ public class IngredientServiceImplTest {
         verify(recipeRepository, times(1)).findById(anyLong());
     }
 
+    @Test
+    public IngredientCommand deleteIngredientById(){
+        return null;
+    }
+
 }
