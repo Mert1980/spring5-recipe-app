@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 public class UnitOfMeasureServiceImplTest {
     UnitOfMeasureService service;
 
-    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
     @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
@@ -26,7 +26,7 @@ public class UnitOfMeasureServiceImplTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-
+        this.unitOfMeasureToUnitOfMeasureCommand = spy(UnitOfMeasureToUnitOfMeasureCommand.class);
         service = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
     }
 
@@ -34,6 +34,7 @@ public class UnitOfMeasureServiceImplTest {
     public void listAllUoms() throws Exception {
         //given
         Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
+
         UnitOfMeasure uom1 = new UnitOfMeasure();
         uom1.setId(1L);
         unitOfMeasures.add(uom1);
